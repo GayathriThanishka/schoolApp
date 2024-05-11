@@ -13,7 +13,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("MGT SCHOOL"),
+        title: const Text("RAVAN SCHOOL"),
         centerTitle: true,
         backgroundColor: const Color.fromARGB(255, 144, 195, 238),
       ),
