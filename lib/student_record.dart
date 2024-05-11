@@ -50,7 +50,7 @@ class _StudentRecordState extends State<StudentRecord> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           const Text(
-                            "Student Details",
+                            "STUDENT DETAILS",
                             style: TextStyle(
                                 fontWeight: FontWeight.w500, fontSize: 24),
                           ),
