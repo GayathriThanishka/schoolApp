@@ -13,7 +13,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("RAVAN SCHOOL"),
+        title: const Text("Gayathri SCHOOL"),
         centerTitle: true,
         backgroundColor: const Color.fromARGB(255, 144, 195, 238),
       ),
@@ -23,7 +23,7 @@ class _HomePageState extends State<HomePage> {
           children: [
             Expanded(
               flex: 2,
-              // 
+              //
               child: Container(
                 color: Colors.black54,
                 child: ClipRRect(
