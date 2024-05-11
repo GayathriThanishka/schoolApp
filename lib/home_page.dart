@@ -23,6 +23,7 @@ class _HomePageState extends State<HomePage> {
           children: [
             Expanded(
               flex: 2,
+              // 
               child: Container(
                 color: Colors.black54,
                 child: ClipRRect(
