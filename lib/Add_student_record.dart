@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:schoolapplication/View_Student_Record.dart';
+import 'package:schoolapplication/model/Student_List.dart';
+import 'package:intl/intl.dart';
 
 class StudentRecord extends StatefulWidget {
   const StudentRecord({super.key});
@@ -8,16 +11,25 @@ class StudentRecord extends StatefulWidget {
 }
 
 class _StudentRecordState extends State<StudentRecord> {
+  final formkey = GlobalKey<FormState>();
+  TextEditingController namecontroller = TextEditingController();
+  TextEditingController fathernamecontroller = TextEditingController();
+  TextEditingController dobcontroller = TextEditingController();
+  TextEditingController contactcontroller = TextEditingController();
+  TextEditingController citycontroller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
           "Add Student Details",
+          style:
+              TextStyle(fontWeight: FontWeight.w500, color: Color(0XFF022D60)),
         ),
-        backgroundColor: const Color.fromARGB(255, 124, 178, 245),
+        backgroundColor: const Color(0XFF6DDD89),
         centerTitle: true,
       ),
+      backgroundColor: const Color(0XFFE4F1E7),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Row(
@@ -25,7 +37,6 @@ class _StudentRecordState extends State<StudentRecord> {
             Expanded(
               flex: 2,
               child: Container(
-                color: Colors.black54,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(20),
                   child: Image.network(
@@ -46,6 +57,7 @@ class _StudentRecordState extends State<StudentRecord> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 40),
                     child: Form(
+                      key: formkey,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -58,36 +70,54 @@ class _StudentRecordState extends State<StudentRecord> {
                             height: 20,
                           ),
                           TextFormField(
-                            decoration: const InputDecoration(
-                              border: OutlineInputBorder(
-                                  borderSide: BorderSide(width: 20)),
-                              contentPadding: EdgeInsets.all(20),
-                              isDense: true,
-                              label: Text("Student Name"),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 30,
-                          ),
-                          TextFormField(
+                            controller: namecontroller,
                             decoration: const InputDecoration(
                               border: OutlineInputBorder(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(20))),
                               contentPadding: EdgeInsets.all(20),
                               isDense: true,
-                              label: Text("Father Name"),
+                              label: Text("First Name"),
                             ),
                           ),
                           const SizedBox(
                             height: 30,
                           ),
                           TextFormField(
+                            controller: fathernamecontroller,
                             decoration: const InputDecoration(
                               border: OutlineInputBorder(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(20))),
-                              contentPadding: EdgeInsets.all(15),
+                              contentPadding: EdgeInsets.all(20),
+                              isDense: true,
+                              label: Text("Last Name"),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          TextFormField(
+                            controller: dobcontroller,
+                            onTap: () async {
+                              DateTime? pick = await showDatePicker(
+                                context: context,
+                                firstDate: DateTime(1990),
+                                lastDate: DateTime(2100),
+                              );
+
+                              if (pick != null) {
+                                setState(() {
+                                  dobcontroller.text =
+                                      DateFormat.yMd().format(pick);
+                                });
+                              }
+                            },
+                            decoration: const InputDecoration(
+                              border: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20))),
+                              contentPadding: EdgeInsets.all(20),
                               isDense: true,
                               label: Text("Date Of Birth"),
                             ),
@@ -96,24 +126,26 @@ class _StudentRecordState extends State<StudentRecord> {
                             height: 30,
                           ),
                           TextFormField(
+                            controller: contactcontroller,
                             decoration: const InputDecoration(
                               border: OutlineInputBorder(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(20))),
-                              contentPadding: EdgeInsets.all(15),
+                              contentPadding: EdgeInsets.all(20),
                               isDense: true,
-                              label: Text("Class "),
+                              label: Text("Contact Number "),
                             ),
                           ),
                           const SizedBox(
                             height: 30,
                           ),
                           TextFormField(
+                            controller: citycontroller,
                             decoration: const InputDecoration(
                               border: OutlineInputBorder(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(20))),
-                              contentPadding: EdgeInsets.all(15),
+                              contentPadding: EdgeInsets.all(20),
                               isDense: true,
                               label: Text("City"),
                             ),
@@ -127,19 +159,27 @@ class _StudentRecordState extends State<StudentRecord> {
                   ),
                   ElevatedButton(
                     onPressed: () {
+                      final detail = StudentDetail(
+                          name: namecontroller.text,
+                          fathername: fathernamecontroller.text,
+                          dob: dobcontroller.text,
+                          contact: contactcontroller.text,
+                          city: citycontroller.text);
+                      studentDetailsList.add(detail);
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) {
-                          return const StudentRecord();
+                          return const StudentRecordDetail();
                         }),
                       );
                     },
                     style: ElevatedButton.styleFrom(
-                        minimumSize: const Size(100, 50),
-                        backgroundColor: const Color.fromARGB(255, 36, 88, 57)),
+                      minimumSize: const Size(100, 50),
+                      backgroundColor: const Color(0XFF69E68A),
+                    ),
                     child: const Text(
                       "Submit",
-                      style: TextStyle(color: Colors.black),
+                      style: TextStyle(color: Color(0XFF022D60)),
                     ),
                   ),
                 ],
