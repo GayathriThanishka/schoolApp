@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:schoolapplication/Add_student_record.dart';
+import 'package:go_router/go_router.dart';
+import 'package:schoolapplication/pages/Add_student_record.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:schoolapplication/routers/page_router.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _LoginPageState extends State<LoginPage> {
+  final appkey = GlobalKey<FormState>();
+  TextEditingController adminIDcontroller = TextEditingController();
+  TextEditingController adminpasswordcontroller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +26,7 @@ class _HomePageState extends State<HomePage> {
           children: [
             const CircleAvatar(
               radius: 30,
-              backgroundColor: Color(0XFF6DDD89),
+              backgroundColor: Color(0XFF32AF85),
               backgroundImage:
                   AssetImage("assets/Screenshot 2024-05-13 163359.png"),
             ),
@@ -35,7 +40,7 @@ class _HomePageState extends State<HomePage> {
         centerTitle: true,
         backgroundColor: const Color(0XFF6DDD89),
       ),
-      backgroundColor: const Color(0XFFE4F1E7),
+      backgroundColor: const Color(0XFFCCEDD0),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Row(
@@ -63,6 +68,7 @@ class _HomePageState extends State<HomePage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Form(
+                    key: appkey,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -75,6 +81,13 @@ class _HomePageState extends State<HomePage> {
                           height: 20,
                         ),
                         TextFormField(
+                          controller: adminIDcontroller,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return "Please Enter AdminID";
+                            }
+                            return null;
+                          },
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(
                                 borderRadius:
@@ -88,6 +101,13 @@ class _HomePageState extends State<HomePage> {
                           height: 20,
                         ),
                         TextFormField(
+                          controller: adminpasswordcontroller,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return "Please Enter Password";
+                            }
+                            return null;
+                          },
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(
                                 borderRadius:
@@ -105,12 +125,9 @@ class _HomePageState extends State<HomePage> {
                         ),
                         ElevatedButton(
                           onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) {
-                                return const StudentRecord();
-                              }),
-                            );
+                            if (appkey.currentState!.validate()) {
+                              return goRouter.goNamed('addstudent');
+                            }
                           },
                           style: ElevatedButton.styleFrom(
                             minimumSize: const Size(100, 50),
