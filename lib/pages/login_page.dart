@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:schoolapplication/pages/Add_student_record.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:schoolapplication/routers/page_router.dart';
+import 'package:provider/provider.dart';
+import 'package:schoolapplication/providers/login_provider.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -13,10 +12,9 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final appkey = GlobalKey<FormState>();
-  TextEditingController adminIDcontroller = TextEditingController();
-  TextEditingController adminpasswordcontroller = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final loginProvider = context.watch<LoginProvider>();
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 70,
@@ -81,13 +79,9 @@ class _LoginPageState extends State<LoginPage> {
                           height: 20,
                         ),
                         TextFormField(
-                          controller: adminIDcontroller,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "Please Enter AdminID";
-                            }
-                            return null;
-                          },
+                          controller: loginProvider.emailIdController,
+                          validator: (value) =>
+                              loginProvider.emailValidation(value),
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(
                                 borderRadius:
@@ -101,13 +95,9 @@ class _LoginPageState extends State<LoginPage> {
                           height: 20,
                         ),
                         TextFormField(
-                          controller: adminpasswordcontroller,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "Please Enter Password";
-                            }
-                            return null;
-                          },
+                          controller: loginProvider.passwordController,
+                          validator: (value) =>
+                              loginProvider.passwordValidation(value),
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(
                                 borderRadius:
@@ -124,11 +114,8 @@ class _LoginPageState extends State<LoginPage> {
                           height: 20,
                         ),
                         ElevatedButton(
-                          onPressed: () {
-                            if (appkey.currentState!.validate()) {
-                              return goRouter.goNamed('addstudent');
-                            }
-                          },
+                          onPressed: () => loginProvider.submitButtonClickEvent(
+                              appkey: appkey),
                           style: ElevatedButton.styleFrom(
                             minimumSize: const Size(100, 50),
                             backgroundColor: const Color(0XFF69E68A),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:schoolapplication/pages/splash.dart';
+import 'package:provider/provider.dart';
+import 'package:schoolapplication/providers/login_provider.dart';
 import 'package:schoolapplication/routers/page_router.dart';
 
 void main() {
@@ -12,11 +13,17 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      title: 'Flutter Demo',
-      theme: ThemeData(),
-      routerConfig: goRouter,
-
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<LoginProvider>(
+          create: (context) => LoginProvider(),
+        )
+      ],
+      child: MaterialApp.router(
+        title: 'Flutter Demo',
+        theme: ThemeData(),
+        routerConfig: goRouter,
+      ),
     );
   }
 }
